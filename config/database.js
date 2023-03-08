@@ -46,7 +46,7 @@ const REFRESH_DB = async (req, res) => {
     purchasedShareStockModel.belongsTo(portfolioModel);
 
     
-    sequelize.sync({ force: true });
+    // sequelize.sync({ force: true });
   } catch (error) {
     return console.log(error.message);
   }
