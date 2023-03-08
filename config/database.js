@@ -2,11 +2,11 @@ const { Sequelize } = require("sequelize");
 let db = {};
 
 const sequelize = new Sequelize({
-  host: "localhost",
+  host: "dpg-cg4cu0hmbg5d885ej02g-a",
   dialect: "postgres",
-  database: "EvaExchangeApi",
-  username: "postgres",
-  password: "qwe123qwe",
+  database: "evaexchange",
+  username: "yakup",
+  password: "S8aXljevKr0e59zmkVrOeagIn27qp8ue",
   port: 5432,
   pool: 40,
   retry: 3,
