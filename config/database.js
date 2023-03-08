@@ -1,6 +1,18 @@
 const { Sequelize } = require("sequelize");
 let db = {};
 
+// const sequelize = new Sequelize({
+//   host: "localhost",
+//   dialect: "postgres",
+//   database: "EvaExchangeApi",
+//   username: "postgres",
+//   password: "qwe123qwe",
+//   port: 5432,
+//   pool: 40,
+//   retry: 3,
+//   logging: true,
+// });
+
 const sequelize = new Sequelize({
   host: "dpg-cg4cu0hmbg5d885ej02g-a",
   dialect: "postgres",
@@ -42,11 +54,10 @@ const REFRESH_DB = async (req, res) => {
     portfolioModel.hasMany(transactionModel);
     transactionModel.belongsTo(portfolioModel);
 
-    portfolioModel.hasMany(purchasedShareStockModel);
-    purchasedShareStockModel.belongsTo(portfolioModel);
+    // portfolioModel.hasMany(purchasedShareStockModel);
+    // purchasedShareStockModel.belongsTo(portfolioModel);
 
-    
-    // sequelize.sync({ force: true });
+    sequelize.sync({ force: true });
   } catch (error) {
     return console.log(error.message);
   }

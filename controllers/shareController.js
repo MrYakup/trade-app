@@ -58,7 +58,7 @@ const updateShare = async (req, res) => {
       // console.log(new Date(avaliableTime - now).getMinutes());
       const remainingTime = new Date(avaliableTime - now).getMinutes();
 
-      if (now < avaliableTime) {
+      if (now > avaliableTime) {
         // const updatedShare = await shareModel.update(
         //   { price: price },
         //   {

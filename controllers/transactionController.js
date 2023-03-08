@@ -35,7 +35,6 @@ const buyTransaction = async (req, res) => {
 
     if (hasShare.quantity >= quantity) {
       const newQuantity = (await hasShare.quantity) - quantity;
-      // await hasShare.save();
 
       await shareModel.update(
         { quantity: newQuantity },
@@ -46,11 +45,8 @@ const buyTransaction = async (req, res) => {
         }
       );
 
-      const hasPurchased = await purchasedShareStockModel.findOne({
-        where: {
-          [Op.and]: [{ portfolioId: portfolioId }, { shareId: shareId }],
-        },
-      });
+      const hasPurchased = await purchasedShareStockModel.findOne({ where: { portfolioId: portfolioId, shareId:shareId} })
+      
 
       if (hasPurchased) {
         hasPurchased.quantity += quantity;
@@ -106,11 +102,7 @@ const sellTransaction = async (req, res) => {
     // console.log("buraya geldi")
     // if (!hasShare) return res.status(400).json({ success: false, message: "share not found" });
     
-    const haveYouShare = await purchasedShareStockModel.findOne({
-      where: {
-        [Op.and]: [{ portfolioId: portfolioId }, { shareId: shareId }],
-      },
-    });
+    const haveYouShare = await purchasedShareStockModel.findOne({ where: { portfolioId: portfolioId, shareId:shareId} })
 
     if (haveYouShare.quantity >= quantity) {
       haveYouShare.quantity -= quantity;

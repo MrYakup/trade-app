@@ -21,6 +21,7 @@ const purchasedShareStockModel = db.sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    portfolioId: { type: DataTypes.INTEGER, allowNull: false },
   },
   {
     createdAt: true,
