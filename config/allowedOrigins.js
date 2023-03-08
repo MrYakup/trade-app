@@ -1,7 +1,6 @@
 const allowedOrigins = [
-    'http://localhost:3000',
-    'http://192.168.1.3:3000',
-    'https://trade-app.onrender.com'
-]
+    "http://localhost:3000",
+     "127.0.0.1:5432"
+    ];
 
-module.exports = allowedOrigins
+module.exports = allowedOrigins;
