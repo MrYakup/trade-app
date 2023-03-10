@@ -6,7 +6,7 @@ const allPortfolios = async (req, res) => {
     const portfolios = await portfolioModel.findAll();
     return res.status(200).json({
       success: true,
-      message: "successfully get all portfolios",
+      message: "All portfolios got successfully",
       portfolios,
     });
   } catch (error) {
@@ -21,7 +21,7 @@ const findPortfolioById = async (req, res) => {
     if (!id) return res.status(400).json({ success: false, message: "Invalid portfolio" });
 
     const portfolio = await portfolioModel.findByPk(id);
-    return res.status(200).json({ success: true, message: "successfully get portfolio", portfolio });
+    return res.status(200).json({ success: true, message: "Portfolio got successfully", portfolio });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
   }
@@ -41,7 +41,7 @@ const createPortfolio = async (req, res) => {
 
     const newPortfolio = await portfolioModel.create({ userId });
 
-    return res.status(200).json({ success: true, message: "successfully created", newPortfolio });
+    return res.status(200).json({ success: true, message: "Portfolio created successfully", newPortfolio });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
   }

@@ -4,7 +4,6 @@ const db = require("./config/database");
 const corsOptions = require("./config/corsOptions");
 const PORT = 5000;
 
-db.CONNECT_DB();
 const app = express();
 app.use(express.json());
 app.use(cors(corsOptions));
@@ -16,7 +15,8 @@ app.use("/shares", require("./routes/shareRoutes"));
 app.use("/transactions", require("./routes/transactionRoutes"));
 app.use("/purchasedShares", require("./routes/purchasedSharesRoutes"));
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   // db.REFRESH_DB();
+  await db.CONNECT_DB();
   console.log(`server is running on port ${PORT}`);
 });

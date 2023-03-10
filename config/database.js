@@ -1,6 +1,7 @@
 const { Sequelize } = require("sequelize");
 let db = {};
 
+//////////For localhost//////////////
 // const sequelize = new Sequelize({
 //   host: "localhost",
 //   dialect: "postgres",
@@ -13,6 +14,8 @@ let db = {};
 //   logging: true,
 // });
 
+
+//////////For https://trade-app.onrender.com//////////
 const sequelize = new Sequelize({
   host: "dpg-cg4cu0hmbg5d885ej02g-a",
   dialect: "postgres",
@@ -34,6 +37,8 @@ const CONNECT_DB = async (req, res) => {
   }
 };
 
+
+//////Reset DataBase//////////
 const REFRESH_DB = async (req, res) => {
   try {
     sequelize.sync({ force: true });

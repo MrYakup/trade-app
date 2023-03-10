@@ -7,12 +7,10 @@ const { Op } = require("sequelize");
 const allTransactions = async (req, res) => {
   try {
     const transactions = await transactionModel.findAll();
-    // const hasPortfolio = await transactionModel.findOne({ where: { shareId: 1 } });
     return res.status(200).json({
       success: true,
-      message: "successfully get all transactions",
+      message: "All transactions got successfully",
       transactions,
-      // hasPortfolio
     });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
@@ -44,7 +42,6 @@ const buyTransaction = async (req, res) => {
           [Op.and]: [{ portfolioId: portfolioId }, { shareId: shareId }],
         },
       });
-      console.log("haspurchased", hasPurchased);
 
       if (hasPurchased) {
         await hasPurchased.increment("quantity", { by: quantity });
@@ -100,6 +97,8 @@ const sellTransaction = async (req, res) => {
         [Op.and]: [{ portfolioId: portfolioId }, { shareId: shareId }],
       },
     });
+
+    if (!haveYouShare) return res.status(400).json({ success: false, message: "share not found" });
 
     if (haveYouShare.quantity >= quantity) {
       await haveYouShare.decrement("quantity", { by: quantity });

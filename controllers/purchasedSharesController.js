@@ -3,7 +3,7 @@ const purchasedShareStockModel = require("../models/purchasedShareStockModel");
 const allPurchasedShares = async (req, res) => {
   try {
     const purchasedShares = await purchasedShareStockModel.findAll();
-    return res.status(200).json({ success: true, message: "successfully get all purchasedShares", purchasedShares });
+    return res.status(200).json({ success: true, message: "All purchasedShares got successfully", purchasedShares });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
   }
@@ -17,7 +17,7 @@ const findPurchasedSharesByPortfolioId = async (req, res) => {
 
     const purchasedPortfolioShares = await purchasedShareStockModel.findAll({ where: { portfolioId: id } });
 
-    if (!purchasedPortfolioShares) return res.status(400).json({ success: false, message: "Not Found" });
+    if (!purchasedPortfolioShares) return res.status(400).json({ success: false, message: "No purchased shares owned by this user" });
 
     return res.status(200).json({
       success: true,
