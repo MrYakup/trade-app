@@ -95,7 +95,7 @@ const sellTransaction = async (req, res) => {
     const hasPortfolio = await PortfolioModel.findOne({ where: { id: portfolioId } });
     if (!hasPortfolio) return res.status(400).json({ success: false, message: "You donn't have a portfolio, firstly create a portfolio" });
 
-    const haveYouShare = await purchasedShareStockModel.findAll({
+    const haveYouShare = await purchasedShareStockModel.findOne({
       where: {
         [Op.and]: [{ portfolioId: portfolioId }, { shareId: shareId }],
       },
