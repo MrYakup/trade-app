@@ -2,6 +2,11 @@ const { DataTypes } = require("sequelize");
 const db = require("../config/database");
 
 const purchasedShareStockModel = db.sequelize.define("purchasedShareStock", {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
   quantity: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -13,14 +18,6 @@ const purchasedShareStockModel = db.sequelize.define("purchasedShareStock", {
   },
   symbol: {
     type: DataTypes.STRING,
-    allowNull: false,
-  },
-  shareId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  portfolioId: {
-    type: DataTypes.INTEGER,
     allowNull: false,
   },
 });

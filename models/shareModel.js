@@ -1,7 +1,14 @@
 const { DataTypes } = require("sequelize");
 const db = require("../config/database");
+const transactionModel = require("./transactionModel");
+const purchasedShareStockModel = require("./purchasedShareStockModel");
 
 const ShareModel = db.sequelize.define("share", {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
   symbol: {
     type: DataTypes.STRING(),
     allowNull: false,
@@ -27,5 +34,17 @@ const ShareModel = db.sequelize.define("share", {
     allowNull: false,
   },
 });
+
+ShareModel.hasMany(transactionModel, {
+  foreinkey: "shareId",
+  sourceKey: "id",
+});
+transactionModel.belongsTo(ShareModel, { foreinkey: "shareId", targetId: "id" });
+
+ShareModel.hasMany(purchasedShareStockModel, {
+  foreinkey: "shareId",
+  sourceKey: "id",
+});
+purchasedShareStockModel.belongsTo(ShareModel, { foreinkey: "shareId", targetId: "id" });
 
 module.exports = ShareModel;
