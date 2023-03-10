@@ -30,7 +30,7 @@ const CONNECT_DB = async (req, res) => {
     await sequelize.authenticate({ logging: true });
     console.log("Connected to database");
   } catch (error) {
-    return console.log(error.message);
+    return console.log("Unable to connect to the database:", error.message);
   }
 };
 
@@ -40,7 +40,7 @@ const REFRESH_DB = async (req, res) => {
     const shareModel = require("../models/shareModel");
     const transactionModel = require("../models/transactionModel");
     const portfolioModel = require("../models/portfolioModel");
-    const purchasedShareStockModel = require("../models/purchasedShareStockModel");
+    // const purchasedShareStockModel = require("../models/purchasedShareStockModel");
 
     userModel.hasOne(portfolioModel);
     portfolioModel.belongsTo(userModel);
@@ -50,12 +50,13 @@ const REFRESH_DB = async (req, res) => {
 
     shareModel.hasMany(transactionModel);
     transactionModel.belongsTo(shareModel);
-
     portfolioModel.hasMany(transactionModel);
     transactionModel.belongsTo(portfolioModel);
 
     // portfolioModel.hasMany(purchasedShareStockModel);
     // purchasedShareStockModel.belongsTo(portfolioModel);
+    // shareModel.hasMany(purchasedShareStockModel);
+    // purchasedShareStockModel.belongsTo(shareModel);
 
     sequelize.sync({ force: true });
   } catch (error) {

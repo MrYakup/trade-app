@@ -1,37 +1,31 @@
 const { DataTypes } = require("sequelize");
 const db = require("../config/database");
 
-const ShareModel = db.sequelize.define(
-  "share",
-  {
-    symbol: {
-      type: DataTypes.STRING(3),
-      allowNull: false,
-      unique: true,
-    },
-    // symbolUppercase: {
-    //   type: DataTypes.VIRTUAL,
-    //   get() {
-    //     return this.getDataValue("symbol").toUpperCase();
-    //   },
-    // },
-    price: {
-      type: DataTypes.ARRAY(DataTypes.INTEGER),
-      allowNull: false,
-      defaultValue: [],
-    },
-    quantity: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+const ShareModel = db.sequelize.define("share", {
+  symbol: {
+    type: DataTypes.STRING(),
+    allowNull: false,
+    unique: true,
+    validate: {
+      len: {
+        args: [3, 3],
+        msg: "must be 3 characters",
+      },
+      isUppercase: {
+        args: true,
+        msg: "must be all capital letters",
+      },
     },
   },
-  {
-    createdAt: true,
-    updatedAt: true,
-    deletedAt: true,
-    charset: "UTF-8",
-    timestamps: true,
-  }
-);
+  price: {
+    type: DataTypes.ARRAY(DataTypes.INTEGER),
+    allowNull: false,
+    defaultValue: [],
+  },
+  quantity: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+});
 
 module.exports = ShareModel;

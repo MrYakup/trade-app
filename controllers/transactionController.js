@@ -7,10 +7,12 @@ const { Op } = require("sequelize");
 const allTransactions = async (req, res) => {
   try {
     const transactions = await transactionModel.findAll();
+    // const hasPortfolio = await transactionModel.findOne({ where: { shareId: 1 } });
     return res.status(200).json({
       success: true,
       message: "successfully get all transactions",
       transactions,
+      // hasPortfolio
     });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
@@ -28,29 +30,24 @@ const buyTransaction = async (req, res) => {
       });
 
     const hasPortfolio = await PortfolioModel.findOne({ where: { id: portfolioId } });
+
     if (!hasPortfolio) return res.status(400).json({ success: false, message: "You donn't have a portfolio, firstly create a portfolio" });
 
     const hasShare = await shareModel.findOne({ where: { id: shareId } });
     if (!hasShare) return res.status(400).json({ success: false, message: "share not found" });
 
     if (hasShare.quantity >= quantity) {
-      const newQuantity = (await hasShare.quantity) - quantity;
+      await hasShare.decrement("quantity", { by: quantity });
 
-      await shareModel.update(
-        { quantity: newQuantity },
-        {
-          where: {
-            id: shareId,
-          },
-        }
-      );
-
-      const hasPurchased = await purchasedShareStockModel.findOne({ where: { portfolioId: portfolioId, shareId:shareId} })
-      
+      const hasPurchased = await purchasedShareStockModel.findOne({
+        where: {
+          [Op.and]: [{ portfolioId: portfolioId }, { shareId: shareId }],
+        },
+      });
+      console.log("haspurchased", hasPurchased);
 
       if (hasPurchased) {
-        hasPurchased.quantity += quantity;
-        await hasPurchased.save();
+        await hasPurchased.increment("quantity", { by: quantity });
       } else {
         const newShare = {
           quantity: quantity,
@@ -98,15 +95,14 @@ const sellTransaction = async (req, res) => {
     const hasPortfolio = await PortfolioModel.findOne({ where: { id: portfolioId } });
     if (!hasPortfolio) return res.status(400).json({ success: false, message: "You donn't have a portfolio, firstly create a portfolio" });
 
-    // const hasShare = await PortfolioModel.findOne({ where: { purchasedStock: { shareId: shareId } } });
-    // console.log("buraya geldi")
-    // if (!hasShare) return res.status(400).json({ success: false, message: "share not found" });
-    
-    const haveYouShare = await purchasedShareStockModel.findOne({ where: { portfolioId: portfolioId, shareId:shareId} })
+    const haveYouShare = await purchasedShareStockModel.findAll({
+      where: {
+        [Op.and]: [{ portfolioId: portfolioId }, { shareId: shareId }],
+      },
+    });
 
     if (haveYouShare.quantity >= quantity) {
-      haveYouShare.quantity -= quantity;
-      await haveYouShare.save();
+      await haveYouShare.decrement("quantity", { by: quantity });
     } else {
       return res.status(400).json({
         success: false,

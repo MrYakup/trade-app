@@ -21,11 +21,10 @@ const addShare = async (req, res) => {
 
     if (!symbol || !price || !quantity || !portfolioId) return res.status(400).json({ success: false, message: "Invalid data" });
 
-    const newSymbol = await symbol.toUpperCase();
     const newShare = await shareModel.create({
       quantity,
-      price,
-      symbol: newSymbol,
+      price: [price],
+      symbol,
       portfolioId,
     });
     return res.status(200).json({ success: true, message: "successfully created", newShare });

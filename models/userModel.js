@@ -1,27 +1,20 @@
 const { DataTypes } = require("sequelize");
 const db = require("../config/database");
 
-const UserModel = db.sequelize.define(
-  "user",
-  {
-    email: {
-      type: DataTypes.STRING(48),
-      allowNull: false,
-      unique: true,
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
+const UserModel = db.sequelize.define("user", {
+  email: {
+    type: DataTypes.STRING(48),
+    allowNull: false,
+    unique: true,
+    validate: {
+      isEmail: true,
     },
   },
-  {
-    createdAt: true,
-    updatedAt: true,
-    deletedAt: true,
-    charset: "UTF-8",
-    timestamps: true,
-  }
-);
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+});
 
 // UserModel.addHook("afterCreate", (model) => {
 //   //sms gönderimi , email gönderimi
