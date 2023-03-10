@@ -17,6 +17,6 @@ app.use("/transactions", require("./routes/transactionRoutes"));
 app.use("/purchasedShares", require("./routes/purchasedSharesRoutes"));
 
 app.listen(PORT, () => {
-  db.REFRESH_DB();
+  // db.REFRESH_DB();
   console.log(`server is running on port ${PORT}`);
 });
