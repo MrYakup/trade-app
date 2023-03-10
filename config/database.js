@@ -1,29 +1,29 @@
 const { Sequelize } = require("sequelize");
 let db = {};
 
-const sequelize = new Sequelize({
-  host: "localhost",
-  dialect: "postgres",
-  database: "EvaExchangeApi",
-  username: "postgres",
-  password: "qwe123qwe",
-  port: 5432,
-  pool: 40,
-  retry: 3,
-  logging: true,
-});
-
 // const sequelize = new Sequelize({
-//   host: "dpg-cg4cu0hmbg5d885ej02g-a",
+//   host: "localhost",
 //   dialect: "postgres",
-//   database: "evaexchange",
-//   username: "yakup",
-//   password: "S8aXljevKr0e59zmkVrOeagIn27qp8ue",
+//   database: "EvaExchangeApi",
+//   username: "postgres",
+//   password: "qwe123qwe",
 //   port: 5432,
 //   pool: 40,
 //   retry: 3,
 //   logging: true,
 // });
+
+const sequelize = new Sequelize({
+  host: "dpg-cg4cu0hmbg5d885ej02g-a",
+  dialect: "postgres",
+  database: "evaexchange",
+  username: "yakup",
+  password: "S8aXljevKr0e59zmkVrOeagIn27qp8ue",
+  port: 5432,
+  pool: 40,
+  retry: 3,
+  logging: true,
+});
 
 const CONNECT_DB = async (req, res) => {
   try {
